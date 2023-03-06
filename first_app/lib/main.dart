@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './transaction.dart';
+import './Transaction.dart';
 void main() {
   //takes a widget and runs it
   runApp(MyApp());
@@ -13,12 +13,17 @@ final List<Transaction> transactions =[
     id: 't1', 
     title: 'New Shoes', 
     amount: 69.99, 
+    date: DateTime.now(),),
+     Transaction(id: 't2', 
+    title: 'Weekly grocery', 
+    amount: 200, 
     date: DateTime.now(),)
 ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      home:Scaffold(
       appBar: AppBar(
         title:Text('Money manager')
       ),
@@ -37,11 +42,36 @@ final List<Transaction> transactions =[
             elevation: 5,
             ),
         ),
-        Card(
-          color: Colors.red,
-          child: Text('LL'),
-          )
+        //with the .map we convert a list of objects into a list of widgets
+        //map will always give you an iterable which we will need tp transform into a list 
+        //map takes a function that will be executed on all the elements of that list
+        //On the input we get a transaction tx, and we output cards with the text of the title of the transaction 
+        Column(children: transactions.map((tx){
+          return Card(
+            child: Row(children:[
+              Container(
+                //EdgeInsets, how many space we want to have vertically and how many horizontaly
+                margin: EdgeInsets.symmetric(
+                  vertical:10, 
+                  horizontal:15),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black,
+                    width:2, )),
+                    padding: EdgeInsets.all(10),
+                child: Text(tx.amount.toString(),
+              ),
+              ),
+              Column(
+                children: [
+                  Text(tx.title),
+                  Text(tx.date.toString()),
+                ],)
+            ])
+            );
+        }).toList(),)
       ],),
+    )
     );
 
   }

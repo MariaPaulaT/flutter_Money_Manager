@@ -1,4 +1,5 @@
 //Its not a widget, its an object that we will like to use in our code
+import 'package:flutter/foundation.dart';
 
 class Transaction{
   final String id;
@@ -7,10 +8,10 @@ class Transaction{
   final DateTime date;
 
   Transaction({
-    this.id, 
-    this.title, 
-    this.amount,
-    this.date,
+    @required this.id, 
+    @required this.title, 
+    @required this.amount,
+    @required this.date,
     });
 
 }

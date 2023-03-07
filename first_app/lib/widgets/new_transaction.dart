@@ -7,6 +7,14 @@ class NewTransaction extends StatelessWidget {
  final titleController = TextEditingController();
 final amountController = TextEditingController();
 
+final Function addTx;
+
+NewTransaction(this.addTx);
+
+void submitData(){
+   addTx(titleController.text, double.parse(amountController.text),);
+}
+ 
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -19,11 +27,18 @@ final amountController = TextEditingController();
                 TextField(
                   decoration: InputDecoration(labelText: 'Title'),
                   //flutter automatically connectts the controllers with the text fields 
-                  controller:titleController),
+                  controller:titleController,
+                  keyboardType:TextInputType.text,
+                  onSubmitted: (_)=> submitData,),
+                  
+                  
                   //onChanged: (val){titleInput=val;},),
                 TextField(
-                  decoration: InputDecoration(labelText: 'Title'),
-                  controller: amountController
+                  decoration: InputDecoration(labelText: 'Amount'),
+                  controller: amountController,
+                  keyboardType:TextInputType.text, 
+                  //(_) for telling flutter that we are getting something but we are not using it 
+                  onSubmitted: (_)=> submitData,
                  // onChanged: (val)=> amountInput=val),
                  ),
                   TextButton(
@@ -31,7 +46,7 @@ final amountController = TextEditingController();
               textStyle:  TextStyle(fontSize: 20),
               primary: Colors.purple,
             ),
-            onPressed: (){},
+            onPressed: submitData,
             child:  Text('Add Transaction'),
           )
         ]

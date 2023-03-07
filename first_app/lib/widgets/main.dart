@@ -1,9 +1,11 @@
 import 'package:first_app/widgets/new_transaction.dart';
+import 'package:first_app/widgets/user_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import './transaction_list.dart';
 import './new_transaction.dart';
+import './user_transaction.dart';
 void main() {
   //takes a widget and runs it
   runApp(MyApp());
@@ -47,8 +49,7 @@ final amountController = TextEditingController();
         //map takes a function that will be executed on all the elements of that list
         //On the input we get a transaction tx, and we output cards with the text of the title of the transaction 
         //on the card we can define a margin but not a padding
-        NewTransaction(),
-        TransactionList()
+        UserTransactions()
       ],),
     )
     );

@@ -16,8 +16,13 @@ TransactionList(this.transactions);
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: Column(children: transactions.map((tx){
-            return Card(
+      //List view should always have a height
+      //Listview.builder only loads whats visible, so its good for large lists 
+      //flutter now nows that it should execute itemBuilder the times that itemCount says
+      //for each time it passses throgh the method it will return a widget
+      child: ListView.builder(
+        itemBuilder:(ctx, index){
+          return Card(
               child: Row(children:[
                 Container(
                   //EdgeInsets, how many space we want to have vertically and how many horizontaly
@@ -31,7 +36,7 @@ TransactionList(this.transactions);
                       padding: EdgeInsets.all(10),
                   child: 
                   //String interpolation
-                  Text( '\$ ${tx.amount}',
+                  Text( '\$ ${transactions[index].amount.toStringAsFixed(2)}',
                   style: TextStyle(fontWeight: FontWeight.bold,
                   fontSize: 20,
                   color: Colors.purple)
@@ -40,14 +45,14 @@ TransactionList(this.transactions);
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [ 
-                      Text(tx.title,  
+                      Text(transactions[index].title,  
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold )), 
                      
                     Container(child: 
                     
-                    Text(DateFormat.yMMMEd().format(tx.date), 
+                    Text(DateFormat.yMMMEd().format(transactions[index].date), 
                     style: TextStyle( 
                       fontSize: 10,
                       color: Colors.blueGrey )
@@ -55,7 +60,9 @@ TransactionList(this.transactions);
                   ],)
               ])
               );
-          }).toList(),),
+        },
+        itemCount: transactions.length,
+       ),
     );
   }
 }

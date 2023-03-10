@@ -3,18 +3,34 @@
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-class NewTransaction extends StatelessWidget {
- final titleController = TextEditingController();
-final amountController = TextEditingController();
 
+class NewTransaction extends StatefulWidget {
 final Function addTx;
 
 NewTransaction(this.addTx);
 
-void submitData(){
-   addTx(titleController.text, double.parse(amountController.text),);
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
 }
- 
+
+class _NewTransactionState extends State<NewTransaction> {
+ final titleController = TextEditingController();
+
+final amountController = TextEditingController();
+
+void submitData(){
+  final enteredTitle = titleController.text;
+  final enteredAmount= double.parse(amountController.text);
+
+  if(enteredTitle.isEmpty || enteredAmount <= 0){
+    return;
+  }
+    widget.addTx(enteredTitle, enteredAmount);
+
+    //closes the topscreen that is displayed.
+    Navigator.of(context).pop();
+}
+
   @override
   Widget build(BuildContext context) {
     return Card(

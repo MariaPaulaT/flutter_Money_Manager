@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
+import './widgets/chart.dart';
 import './models/transaction.dart';
 
 void main() => runApp(MyApp());
@@ -50,6 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
+
+List<Transaction> get _recentTransaction{
+  //where lets you run a list and if the element is true, the element is kept in the list
+  return _userTransactions.where((transac){
+    return transac.date.isAfter(DateTime.now().subtract(Duration(days:7)));
+  }).toList();
+}
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
       title: txTitle,
@@ -98,11 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Container(
               width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text('CHART!'),
-                elevation: 5,
-              ),
+             child: Chart(_recentTransaction),
             ),
              //with the .map we convert a list of objects into a list of widgets
           //map will always give you an iterable which we will need tp transform into a list 

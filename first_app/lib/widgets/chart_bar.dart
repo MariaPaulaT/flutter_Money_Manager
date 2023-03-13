@@ -18,9 +18,11 @@ class  ChartBar extends StatelessWidget {
     return Column(children:[
       //this text should shrink if the amount is really big
       //fitted box prevents that the number grows to its original size
-       FittedBox(
-        child: Text('\$${spendingAmount.toStringAsExponential(0)}')
-        ),
+       Container(
+         child: FittedBox(
+          child: Text('\$${spendingAmount.toStringAsExponential(0)}')
+          ),
+       ),
        SizedBox(height: 4,),
        Container(
         height: 60,

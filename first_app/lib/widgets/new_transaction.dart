@@ -57,10 +57,27 @@ void submitData(){
                   onSubmitted: (_)=> submitData,
                  // onChanged: (val)=> amountInput=val),
                  ),
-                  TextButton(
-            style: TextButton.styleFrom(
+                 Container(
+                  height: 70,
+                   child: Row(children: [
+                    Text('No Date choosen!'),
+                    TextButton(
+                      child: Text('Choose Date'),
+                      onPressed: (){},
+                      style: TextButton.styleFrom(
+                        textStyle: TextStyle(
+                          color: Theme.of(context).primaryColor, 
+                          fontWeight : FontWeight.bold,
+                        )
+                      )
+                    )
+                   ],),
+                 ),
+                  ElevatedButton(
+            style: ElevatedButton.styleFrom(
               textStyle:  TextStyle(fontSize: 20),
-              primary: Colors.purple,
+              primary: Theme.of(context).primaryColor,
+              onPrimary: Colors.white,
             ),
             onPressed: submitData,
             child:  Text('Add Transaction'),

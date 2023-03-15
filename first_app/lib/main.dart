@@ -1,4 +1,4 @@
-import 'dart:ui';
+
 
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,10 @@ class MyApp extends StatelessWidget {
   accentColor: Colors.amber,
   fontFamily: 'Quicksand',
   textTheme: ThemeData.light().textTheme.copyWith(
-    headline6: TextStyle(fontFamily: 'OpenSans', fontWeight: FontWeight.bold, fontSize: 18)
+    headline6: TextStyle(
+      fontFamily: 'OpenSans', 
+      fontWeight: FontWeight.bold, 
+      fontSize: 18)
   ),
 ),
     home: MyHomePage(),
@@ -37,28 +40,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Weekly Groceries',
-      amount: 16.53,
-      date: DateTime.now(),
-    ),
+    
   ];
 
 
 List<Transaction> get _recentTransaction{
   //where lets you run a list and if the element is true, the element is kept in the list
   return _userTransactions.where((transac){
-    return transac.date.isAfter(DateTime.now().subtract(Duration(days:7)));
+    return transac.date.isAfter(
+      DateTime.now().subtract(Duration(days:7)));
   }).toList();
 }
-  void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime chosenDate) {
     final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
@@ -71,7 +65,7 @@ List<Transaction> get _recentTransaction{
     });
   }
 
-  void _startAddNewTransaction(BuildContext ctx) {
+    void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
@@ -113,10 +107,8 @@ void _deleteTransaction(String id){
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-             child: Chart(_recentTransaction),
-            ),
+            Chart(_recentTransaction),
+            
              //with the .map we convert a list of objects into a list of widgets
           //map will always give you an iterable which we will need tp transform into a list 
           //map takes a function that will be executed on all the elements of that list

@@ -1,9 +1,5 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' ;
 
 class  ChartBar extends StatelessWidget {
   final String label;
@@ -19,8 +15,9 @@ class  ChartBar extends StatelessWidget {
       //this text should shrink if the amount is really big
       //fitted box prevents that the number grows to its original size
        Container(
+        height: 20,
          child: FittedBox(
-          child: Text('\$${spendingAmount.toStringAsExponential(1)}')
+          child: Text('\$${spendingAmount.toStringAsFixed(0)}')
           ),
        ),
        SizedBox(height: 4,),

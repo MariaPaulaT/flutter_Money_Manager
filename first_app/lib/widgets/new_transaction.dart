@@ -1,7 +1,5 @@
 //will hold the text inputs
 
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 class NewTransaction extends StatefulWidget {
@@ -10,7 +8,7 @@ final Function addTx;
 NewTransaction(this.addTx);
 
   @override
-  State<NewTransaction> createState() => _NewTransactionState();
+  _NewTransactionState createState() => _NewTransactionState();
 }
 
 class _NewTransactionState extends State<NewTransaction> {
@@ -19,23 +17,25 @@ class _NewTransactionState extends State<NewTransaction> {
 final _amountController = TextEditingController();
 
 DateTime _selectedDate;
-void _submitData(){
-  final enteredTitle = _titleController.text;
-  final enteredAmount= double.parse(_amountController.text);
+ void _submitData() {
+    if (_amountController.text.isEmpty) {
+      return;
+    }
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.parse(_amountController.text);
 
-if (_amountController.text.isEmpty)
-{
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
+      return;
+    }
 
-}  
+    widget.addTx(
+      enteredTitle,
+      enteredAmount,
+      _selectedDate,
+    );
 
-if(enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null ){
-    return;
-  }
-    widget.addTx(enteredTitle, enteredAmount, _selectedDate);
-
-    //closes the topscreen that is displayed.
     Navigator.of(context).pop();
-}
+  }
 
 void _presentDatePicker(){
   showDatePicker(
@@ -47,9 +47,9 @@ void _presentDatePicker(){
       if(pickedDate == null){
         return;
       }
-      setState(){
+      setState((){
         _selectedDate= pickedDate;
-      }
+      });
      
     });
 }
@@ -66,7 +66,6 @@ void _presentDatePicker(){
                   decoration: InputDecoration(labelText: 'Title'),
                   //flutter automatically connectts the controllers with the text fields 
                   controller:_titleController,
-                  keyboardType:TextInputType.text,
                   onSubmitted: (_)=> _submitData,),
                   
                   
@@ -74,23 +73,23 @@ void _presentDatePicker(){
                 TextField(
                   decoration: InputDecoration(labelText: 'Amount'),
                   controller: _amountController,
-                  keyboardType:TextInputType.text, 
+                  keyboardType:TextInputType.number, 
                   //(_) for telling flutter that we are getting something but we are not using it 
-                  onSubmitted: (_)=> _submitData,
+                  onSubmitted: (_)=> _submitData(),
                  // onChanged: (val)=> amountInput=val),
                  ),
                  Container(
                   height: 70,
                    child: Row(children: [
                     Expanded(
-                      child: Text(_selectedDate == null ? 'No Date choosen!':
+                      child: Text(_selectedDate == null ? 
+                      'No Date choosen!':
                        'Picked Date: ${DateFormat.yMd().format(_selectedDate)}' ),
                     ),
                     TextButton(
                       child: Text('Choose Date'),
-                      onPressed: (){
-                        _presentDatePicker();
-                        },
+                      onPressed: 
+                        _presentDatePicker,
                       style: TextButton.styleFrom(
                         textStyle: TextStyle(
                           color: Theme.of(context).primaryColor, 

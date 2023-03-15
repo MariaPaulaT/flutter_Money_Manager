@@ -1,13 +1,21 @@
 
 
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
 import './widgets/chart.dart';
 import './models/transaction.dart';
 
-void main() => runApp(MyApp());
+void main(){
+//Esto hace que nose pueda rotar el telefono
+  //WidgetsFlutterBinding.ensureInitialized();
+  //SystemChrome.setPreferredOrientations([
+   // DeviceOrientation.portraitUp,
+  //  DeviceOrientation.portraitDown, 
+  //]);
+  runApp(MyApp());
+} 
 
 class MyApp extends StatelessWidget {
   @override
@@ -89,8 +97,8 @@ void _deleteTransaction(String id){
 }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    //i put the app bar in an object because the app bar has info about the app bar size
+    final appBar= AppBar(
         title: Text('Flutter App'),
         actions: <Widget>[
           IconButton(
@@ -98,7 +106,9 @@ void _deleteTransaction(String id){
             onPressed: () => _startAddNewTransaction(context),
           ),
         ],
-      ),
+      );
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           //SpaceAround: the amount of space betweeen the items is the same
@@ -107,14 +117,18 @@ void _deleteTransaction(String id){
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransaction),
+            Container(
+              height: (MediaQuery.of(context).size.height-appBar.preferredSize.height- MediaQuery.of(context).padding.top)*0.3,
+              child: Chart(_recentTransaction)),
             
              //with the .map we convert a list of objects into a list of widgets
           //map will always give you an iterable which we will need tp transform into a list 
           //map takes a function that will be executed on all the elements of that list
           //On the input we get a transaction tx, and we output cards with the text of the title of the transaction 
           //on the card we can define a margin but not a padding
-            TransactionList(_userTransactions, _deleteTransaction),
+            Container(
+              height: (MediaQuery.of(context).size.height-appBar.preferredSize.height-MediaQuery.of(context).padding.top)*0.7,
+              child: TransactionList(_userTransactions, _deleteTransaction)),
           ],
         ),
       ),

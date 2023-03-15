@@ -14,9 +14,7 @@ TransactionList(this.transactions, this.deleteTx);
  
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height*0.6,
-      child: 
+    return
             //List view should always have a height
       //Listview.builder only loads whats visible, so its good for large lists 
       //flutter now nows that it should execute itemBuilder the times that itemCount says
@@ -56,7 +54,6 @@ TransactionList(this.transactions, this.deleteTx);
                 );
               },
               itemCount: transactions.length,
-            ),
     );
   }
 }

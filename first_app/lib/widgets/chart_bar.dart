@@ -20,7 +20,7 @@ class  ChartBar extends StatelessWidget {
       //fitted box prevents that the number grows to its original size
        Container(
          child: FittedBox(
-          child: Text('\$${spendingAmount.toStringAsExponential(0)}')
+          child: Text('\$${spendingAmount.toStringAsExponential(1)}')
           ),
        ),
        SizedBox(height: 4,),

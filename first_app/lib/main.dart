@@ -58,11 +58,11 @@ List<Transaction> get _recentTransaction{
     return transac.date.isAfter(DateTime.now().subtract(Duration(days:7)));
   }).toList();
 }
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
     final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: chosenDate,
       id: DateTime.now().toString(),
     );
 
@@ -84,6 +84,15 @@ List<Transaction> get _recentTransaction{
     );
   }
 
+void _deleteTransaction(String id){
+  setState(() {
+    //remove where goes through all the list
+  _userTransactions.removeWhere((tx) {
+    return tx.id == id;
+  });
+  });
+
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +122,7 @@ List<Transaction> get _recentTransaction{
           //map takes a function that will be executed on all the elements of that list
           //On the input we get a transaction tx, and we output cards with the text of the title of the transaction 
           //on the card we can define a margin but not a padding
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
           ],
         ),
       ),

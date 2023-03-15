@@ -8,8 +8,9 @@ class TransactionList extends StatelessWidget {
 //To receive the transactions
 final List<Transaction> transactions; 
 
+final Function deleteTx;
 //constructure
-TransactionList(this.transactions);
+TransactionList(this.transactions, this.deleteTx);
 
  
   @override
@@ -39,10 +40,15 @@ TransactionList(this.transactions);
               style: Theme.of(context).textTheme.headline6,
               ),
               subtitle: Text(DateFormat.yMMMd().format(transactions[index].date)),
+            trailing: IconButton(icon: Icon(Icons.delete), color: Theme.of(context).errorColor,
+            //delete tx needs an argumnet, thats why we make it an anonymous function so we can pass an argument
+            onPressed: ()=>deleteTx(transactions[index].id),),
+            
             ),
           );
         },
         itemCount: transactions.length,
+        
        ),
     );
   }

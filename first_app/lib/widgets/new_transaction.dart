@@ -55,62 +55,66 @@ void _presentDatePicker(){
 }
   @override
   Widget build(BuildContext context) {
-    return Card(
-          elevation: 5,
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: Column( 
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children:[
-                TextField(
-                  decoration: InputDecoration(labelText: 'Title'),
-                  //flutter automatically connectts the controllers with the text fields 
-                  controller:_titleController,
-                  onSubmitted: (_)=> _submitData,),
-                  
-                  
-                  //onChanged: (val){titleInput=val;},),
-                TextField(
-                  decoration: InputDecoration(labelText: 'Amount'),
-                  controller: _amountController,
-                  keyboardType:TextInputType.number, 
-                  //(_) for telling flutter that we are getting something but we are not using it 
-                  onSubmitted: (_)=> _submitData(),
-                 // onChanged: (val)=> amountInput=val),
-                 ),
-                 Container(
-                  height: 70,
-                   child: Row(children: [
-                    Expanded(
-                      child: Text(_selectedDate == null ? 
-                      'No Date choosen!':
-                       'Picked Date: ${DateFormat.yMd().format(_selectedDate)}' ),
-                    ),
-                    TextButton(
-                      child: Text('Choose Date'),
-                      onPressed: 
-                        _presentDatePicker,
-                      style: TextButton.styleFrom(
-                        textStyle: TextStyle(
-                          color: Theme.of(context).primaryColor, 
-                          fontWeight : FontWeight.bold,
+    return SingleChildScrollView(
+      child: Card(
+            elevation: 5,
+            child: Container(
+              padding: EdgeInsets.only(
+                top: 10, 
+                left: 10, 
+                right: 10, 
+                bottom: MediaQuery.of(context).viewInsets.bottom + 10,),
+              child: Column( 
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children:[
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                    //flutter automatically connectts the controllers with the text fields 
+                    controller:_titleController,
+                    onSubmitted: (_)=> _submitData,),
+                    //onChanged: (val){titleInput=val;},),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                    controller: _amountController,
+                    keyboardType:TextInputType.number, 
+                    //(_) for telling flutter that we are getting something but we are not using it 
+                    onSubmitted: (_)=> _submitData(),
+                   // onChanged: (val)=> amountInput=val),
+                   ),
+                   Container(
+                    height: 70,
+                     child: Row(children: [
+                      Expanded(
+                        child: Text(_selectedDate == null ? 
+                        'No Date choosen!':
+                         'Picked Date: ${DateFormat.yMd().format(_selectedDate)}' ),
+                      ),
+                      TextButton(
+                        child: Text('Choose Date'),
+                        onPressed: 
+                          _presentDatePicker,
+                        style: TextButton.styleFrom(
+                          textStyle: TextStyle(
+                            color: Theme.of(context).primaryColor, 
+                            fontWeight : FontWeight.bold,
+                          )
                         )
                       )
-                    )
-                   ],),
-                 ),
-                  ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              textStyle:  TextStyle(fontSize: 20),
-              primary: Theme.of(context).primaryColor,
-              onPrimary: Colors.white,
-            ),
-            onPressed: _submitData,
-            child:  Text('Add Transaction'),
-          )
-        ]
-            
-        ),
-          ));
+                     ],),
+                   ),
+                    ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                textStyle:  TextStyle(fontSize: 20),
+                primary: Theme.of(context).primaryColor,
+                onPrimary: Colors.white,
+              ),
+              onPressed: _submitData,
+              child:  Text('Add Transaction'),
+            )
+          ]
+              
+          ),
+            )),
+    );
   }
 } 
